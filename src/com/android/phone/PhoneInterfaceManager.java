@@ -35,6 +35,7 @@ import android.os.UserHandle;
 import android.telephony.NeighboringCellInfo;
 import android.telephony.CellInfo;
 import android.telephony.ServiceState;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -70,6 +71,7 @@ public class PhoneInterfaceManager extends ITelephony.Stub {
 
     PhoneGlobals mApp;
     Phone mPhone;
+    TelephonyManager mTelephonyManager;
     CallManager mCM;
     AppOpsManager mAppOps;
     MainThreadHandler mMainThreadHandler;
@@ -295,6 +297,10 @@ public class PhoneInterfaceManager extends ITelephony.Stub {
         Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(url));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mApp.startActivity(intent);
+    }
+
+    public void toggleLTE(boolean on) {
+        return;
     }
 
     private boolean showCallScreenInternal(boolean specifyInitialDialpadState,
@@ -896,5 +902,9 @@ public class PhoneInterfaceManager extends ITelephony.Stub {
      */
     public int getLteOnCdmaMode() {
         return mPhone.getLteOnCdmaMode();
+    }
+
+    public int getLteOnGsmMode() {
+        return mTelephonyManager.getLteOnGsmMode();
     }
 }

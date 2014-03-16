@@ -195,7 +195,7 @@ public class CallFeaturesSetting extends PreferenceActivity
             "sip_settings_category_key";
 
     private static final String BUTTON_NON_INTRUSIVE_INCALL_KEY = "button_non_intrusive_incall";
-
+    private static final String BUTTON_SMART_PHONE_CALL_KEY = "button_smart_phone_call";
     private Intent mContactListIntent;
 
     /** Event for Async voicemail change call */
@@ -287,6 +287,7 @@ public class CallFeaturesSetting extends PreferenceActivity
     private PreferenceScreen mButtonBlacklist;
     private CheckBoxPreference mEnableSuggestions;
     private CheckBoxPreference mEnableReverseLookup;
+    private CheckBoxPreference mSmartCall;
     private ListPreference mFlipAction;
 
     private class VoiceMailProvider {
@@ -550,6 +551,10 @@ public class CallFeaturesSetting extends PreferenceActivity
         } else if (preference == mEnableReverseLookup){
             Settings.System.putInt(getContentResolver(), Settings.System.ENABLE_DIALER_REVERSE_LOOKUP,
                     mEnableReverseLookup.isChecked() ? 1 : 0);
+            return true;
+        } else if (preference == mSmartCall){
+            Settings.System.putInt(getContentResolver(), Settings.System.SMART_PHONE_CALLER,
+                    mSmartCall.isChecked() ? 1 : 0);
             return true;
         }
         return false;
@@ -1666,6 +1671,10 @@ public class CallFeaturesSetting extends PreferenceActivity
         mEnableReverseLookup = (CheckBoxPreference) findPreference(BUTTON_ENABLE_REVERSE_LOOKUP);
         mEnableReverseLookup.setChecked(Settings.System.getInt(getContentResolver(),
                 Settings.System.ENABLE_DIALER_REVERSE_LOOKUP, 1) == 0 ? false : true);
+
+        mSmartCall = (CheckBoxPreference) findPreference(BUTTON_SMART_PHONE_CALL_KEY);
+        mSmartCall.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.SMART_PHONE_CALLER, 0) != 0 ? true : false);
 
         // create intent to bring up contact list
         mContactListIntent = new Intent(Intent.ACTION_GET_CONTENT);
